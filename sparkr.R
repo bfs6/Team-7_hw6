@@ -8,7 +8,7 @@ library(SparkR)
 
 ## Starting
 
-sc = sparkR.init()
+sc = sparkR.init("local[4]")
 sqlContext = sparkRSQL.init(sc)
 
 
