@@ -48,6 +48,13 @@ res_mar25=cbind(res_mar, m_rank)%>% head(n=25)
 save(res_jan25,res_feb25,res_mar25, file="task1.Rdata")
 
 
+res2 = select(j, j$subreddit, j$created_utc) 
+res2 = mutate(res2, created = from_unixtime(res2$created_utc)) %>%
+  mutate(., month=month(.$created), wday=date_format(.$created,"E")) 
+res2=select(res2, res2$subreddit, res2$created, res2$wday, res2$created_utc)
+#graph for all days from jan to march by hours
+
+#graph 7 graphs of each day
 
 
 ## Stopping
