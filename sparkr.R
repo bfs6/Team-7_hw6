@@ -19,15 +19,15 @@ j = read.json(sqlContext, "hdfs://localhost:8020/data/reddit/large.json")
 res = select(j, j$subreddit, j$created_utc) 
 res = mutate(res, created = from_unixtime(res$created_utc)) %>%
   mutate(., month=month(.$created), wday=date_format(.$created,"E")) 
-res = group_by(res, res$month, res$subreddit) %>% count()
+res1 = group_by(res, res$month, res$subreddit) %>% count()
 
 j_rank=rep(0, 150)
 f_rank=rep(NA,150)
 m_rank=rep(NA, 150)
-res_jan = filter(res, res$month == 1) %>% arrange(., desc(.$count)) %>% head(n=150)
+res_jan = filter(res1, res$month == 1) %>% arrange(., desc(.$count)) %>% head(n=150)
 
-res_feb = filter(res, res$month == 2) %>% arrange(., desc(.$count)) %>% head(n=150)
-res_mar = filter(res, res$month == 3) %>% arrange(., desc(.$count)) %>% head(n=150)
+res_feb = filter(res1, res$month == 2) %>% arrange(., desc(.$count)) %>% head(n=150)
+res_mar = filter(res1, res$month == 3) %>% arrange(., desc(.$count)) %>% head(n=150)
 
 
 
@@ -48,9 +48,7 @@ res_mar25=cbind(res_mar, m_rank)%>% head(n=25)
 save(res_jan25,res_feb25,res_mar25, file="task1.Rdata")
 
 
-res2 = select(j, j$subreddit, j$created_utc) 
-res2 = mutate(res2, created = from_unixtime(res2$created_utc)) %>%
-  mutate(., month=month(.$created), wday=date_format(.$created,"E")) 
+
 res2=select(res2, res2$subreddit, res2$created, res2$wday, res2$created_utc)
 #graph for all days from jan to march by hours
 
