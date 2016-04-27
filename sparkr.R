@@ -22,22 +22,22 @@ res_t = mutate(res, created = from_unixtime(res$created_utc)) %>%
 res1 = group_by(res_t, res_t$month, res_t$subreddit) %>% count()
 
 res2=group_by(res_t, res_t$wday, res_t$hour)%>% count()
-res_mon=filter(res2, res2$wday=="Mon")%>%head(n=24)
-res_tue=filter(res2, res2$wday=="Tue")%>%head(n=24)
-res_wed=filter(res2, res2$wday=="Wed")%>%head(n=24)
-res_thu=filter(res2, res2$wday=="Thu")%>%head(n=24)
-res_fri=filter(res2, res2$wday=="Fri")%>%head(n=24)
-res_sat=filter(res2, res2$wday=="Sat")%>%head(n=24)
-res_sun=filter(res2, res2$wday=="Sun")%>%head(n=24)
+res_mon=collect(filter(res2, res2$wday=="Mon"))
+res_tue=collect(filter(res2, res2$wday=="Tue"))
+res_wed=collect(filter(res2, res2$wday=="Wed"))
+res_thu=collect(filter(res2, res2$wday=="Thu"))
+res_fri=collect(filter(res2, res2$wday=="Fri"))
+res_sat=collect(filter(res2, res2$wday=="Sat"))
+res_sun=collect(filter(res2, res2$wday=="Sun"))
 
 
 
 res2agg=group_by(res_t, res_t$rounded)%>% count()
 res2agg=collect(res2agg)
 
+
+
 save(res_mon,res_tue,res_wed,res_thu, res_fri, res_sat, res_sun,res2agg, file="task2.Rdata")
-
-
 plot(res_mon$count, x=res_mon$hour, main="monday posts", xlab="hours", col="blue")
 plot(res_tue$count, x=res_tue$hour, main="tuesday posts", xlab="hours", col="red")
 plot(res_wed$count, x=res_wed$hour, main="wednesday posts", xlab="hours", col="brown")
