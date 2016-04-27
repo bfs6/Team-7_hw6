@@ -77,12 +77,14 @@ save(res_jan25,res_feb25,res_mar25, file="task1.Rdata")
 
 
 
-#graph for all days from jan to march by hours
-
-#graph 7 graphs of each day
 
 
-## Stopping
+#####TASK 3
+
+
+
+
+#STOPPING
 
 sparkR.stop() # Stop sparkR
 
