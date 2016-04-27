@@ -29,7 +29,15 @@ res_thu=filter(res2, res2$wday=="Thu")%>%head(n=24)
 res_fri=filter(res2, res2$wday=="Fri")%>%head(n=24)
 res_sat=filter(res2, res2$wday=="Sat")%>%head(n=24)
 res_sun=filter(res2, res2$wday=="Sun")%>%head(n=24)
-save(res_mon,res_tue,res_wed,res_thu, res_fri, res_sat, res_sun, file="task2.Rdata")
+
+
+
+res2agg=group_by(res_t, res_t$rounded)%>% count()
+res2agg=collect(res2agg)
+
+save(res_mon,res_tue,res_wed,res_thu, res_fri, res_sat, res_sun,res2agg, file="task2.Rdata")
+
+
 plot(res_mon$count, x=res_mon$hour, main="monday posts", xlab="hours", col="blue")
 plot(res_tue$count, x=res_tue$hour, main="tuesday posts", xlab="hours", col="red")
 plot(res_wed$count, x=res_wed$hour, main="wednesday posts", xlab="hours", col="brown")
@@ -37,9 +45,7 @@ plot(res_thu$count, x=res_thu$hour, main="thursday posts", xlab="hours", col="cy
 plot(res_fri$count, x=res_fri$hour, main="friday posts", xlab="hours", col="green")
 plot(res_sat$count, x=res_sat$hour, main="saturday posts", xlab="hours", col="magenta")
 plot(res_sun$count, x=res_sun$hour, main="sunday posts", xlab="hours", col="black")
-
-
-
+plot(res2agg$count, x=as.POSIXct(res2agg$rounded, origin="1970-01-01"), main="aggregate posts", xlab="hours over three months", col="black")
 
 j_rank=rep(0, 150)
 f_rank=rep(NA,150)
