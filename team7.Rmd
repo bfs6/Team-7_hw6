@@ -1,0 +1,31 @@
+---
+title: "Untitled"
+author: "Justin Wang"
+date: "4/30/2016"
+output: html_document
+---
+```{r}
+load("~/Team7_hw6/task1.Rdata")
+load("~/Team7_hw6/task2.Rdata")
+load("~/Team7_hw6/task3.Rdata")
+
+res_jan25
+
+res_feb25
+
+
+res_mar25
+
+plot(res_mon$count, x=res_mon$hour, main="monday posts", xlab="hours", col="blue")
+plot(res_tue$count, x=res_tue$hour, main="tuesday posts", xlab="hours", col="red")
+plot(res_wed$count, x=res_wed$hour, main="wednesday posts", xlab="hours", col="brown")
+plot(res_thu$count, x=res_thu$hour, main="thursday posts", xlab="hours", col="cyan")
+plot(res_fri$count, x=res_fri$hour, main="friday posts", xlab="hours", col="green")
+plot(res_sat$count, x=res_sat$hour, main="saturday posts", xlab="hours", col="magenta")
+plot(res_sun$count, x=res_sun$hour, main="sunday posts", xlab="hours", col="black")
+plot(res2agg$count, x=as.POSIXct(res2agg$rounded, origin="1970-01-01"), main="aggregate posts", xlab="hours over three months", col="black")
+
+res_val
+res_val1
+res_val2
+```
