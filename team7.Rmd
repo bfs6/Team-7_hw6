@@ -5,9 +5,9 @@ date: "4/30/2016"
 output: html_document
 ---
 ```{r}
-githubURL <- "https://github.com/Sta323-Sp16/Team7_hw6/blob/master/task1.Rdata"
-load(url(githubURL))
-
+load("~/Team7_hw6/task1.Rdata")
+load("~/Team7_hw6/task2.Rdata")
+load("~/Team7_hw6/task3.Rdata")
 
 res_jan25
 
