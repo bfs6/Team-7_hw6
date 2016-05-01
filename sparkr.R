@@ -44,7 +44,6 @@ day1 = group_by(day1, "col") %>% count()
 res_val1 = arrange(day1, desc(day1$count))%>% head(n=150)
 res_val1=res_val1[!(res_val1$col %in% stop),]
 
-
 day2= select(filter(word_res, word_res$day == 57), word_res$body)
 day2 = mutate(day2, clean = regexp_replace(day2$body, "[0-9,\\-\\[\\]\"'`.?()’—!⌈_+^#@$%*;:/|\\<>&\n]","") %>% lower())
 day2 = selectExpr(day2, "split(clean,' ') AS words")
