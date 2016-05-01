@@ -14,8 +14,9 @@ res_feb25
 res_mar25
 ```
 
-TASK1
-for this task, I created 3 tables that would display the most popular subreddit. To caluclate the change i just subtracted the index of the proceeding month by that of the subsequent month. For january the rank change was set as 1. 
+Task 1
+
+for this task, I created 3 tables that would display the most popular subreddit. To calculate the change I just subtracted the index of the proceeding month by that of the subsequent month. For january the rank change was set as 0 since I assumed no change. 
 
 It seems that the top subreddits remain the same throughout the months ("askreddit, leagueoflegends, pics, funny"). In februrary there is a huge rise in the subreddit amiibo proabably due to new release of whatever amiibo is. In march newsokur had a rise of 114 ranks and collegebasketball went up by 47 ranks. This makes sense due to march madness. 
 
@@ -33,7 +34,7 @@ plot(res2agg$count, x=as.POSIXct(res2agg$rounded, origin="1970-01-01"), main="ag
 
 Task 2
 
-As expected it seems that people most mostly during the day especially peaking at hours of 12PM until 10pm. The high numbers stay consistent until the night when it drops to about 30000 for all days of the week, due to people sleeping. Looking at the aggregate plot for the whole three month span it seems that the posts decrease on weekeends. This is again confirmed. The weekday posts peek around 90000 a day while the weekend posts peak at 70000. 
+As expected it seems that people most mostly during the day especially peaking at hours of 12PM until 10pm. The high numbers stay consistent until the night when it drops to about 30000 for all days of the week, due to people sleeping. Looking at the aggregate plot for the whole three month span it seems that the posts decrease on weekeends. This is again confirmed by the daily plots. The weekday posts peek around 90000 a day while the weekend posts peak at 70000. 
 
 
 ```{er}
@@ -47,4 +48,4 @@ res_val2
 
 Task 3
 
-I made a table displaying the top words in 3 days. The days I chose were Feb 14, jan 24 and feb 26. It seems that the most frequent words after filtering out the stopwords remains consistent for each day. Valentines days doenst have an unusual trend. Porbably due to reddit not really celebrating valentine day and people won't post valentine messages to strangers online. 
+I made a table displaying the top words in 3 days. The days I chose were Feb 14, jan 24 and feb 26. It seems that the most frequent words after filtering out the stopwords remains consistent for each day. Valentines days doenst have an unusual trend. Porbably due to reddit not really celebrating valentine day and people won't post valentine messages to strangers online. You can observe the words in task3.Rdata
