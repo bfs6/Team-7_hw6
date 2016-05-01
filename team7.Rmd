@@ -1,13 +1,10 @@
 ---
-title: "Untitled"
-author: "Justin Wang"
-date: "4/30/2016"
-output: html_document
+hw6
 ---
 ```{r}
-load("~/Team7_hw6/task1.Rdata")
-load("~/Team7_hw6/task2.Rdata")
-load("~/Team7_hw6/task3.Rdata")
+load("~/task1.Rdata")
+load("~/task2.Rdata")
+load("~/task3.Rdata")
 
 res_jan25
 res_feb25
