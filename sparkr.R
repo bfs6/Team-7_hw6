@@ -6,7 +6,7 @@ Sys.setenv(JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.99-2.6.5.0.el7_2.x86
 .libPaths(c(file.path(Sys.getenv("SPARK_HOME"), "R/lib"), .libPaths()))
 library(SparkR)
 library(magrittr)
-
+library(tm)
 
 ## Starting
 
@@ -16,9 +16,52 @@ sqlContext = sparkRSQL.init(sc)
 #getjson file
 j = read.json(sqlContext, "hdfs://localhost:8020/data/reddit/large.json")
 
+words=select(j, j$body, j$created_utc)
+word_res = mutate(words, created = from_unixtime(words$created_utc)) %>%
+  mutate(., day=date_format(.$created, "D")) 
+
+
+stop=c(stopwords(kind = "en"), "" )
+stop =c(stop, gsub("'", '', stop))
+
+
+valentine= select(filter(word_res, word_res$day == 45), word_res$body)
+valentine1 = mutate(valentine, clean = regexp_replace(valentine$body, "[0-9,\\-\\[\\]\"'`.?()’—!⌈_+^#@$%*;:/|\\<>&\n]","") %>% lower())
+valentine1 = selectExpr(valentine1, "split(clean,' ') AS words")
+valentine2 = select(valentine1, explode(valentine1$words))
+valentine2$col = trim(valentine2$col)
+valentine3 = group_by(valentine2, "col") %>% count()
+res_val = arrange(valentine3, desc(valentine3$count))%>% head(n=150)
+res_val=res_val[!(res_val$col %in% stop),]
+
+
+day1= select(filter(word_res, word_res$day == 24), word_res$body)
+day1 = mutate(day1, clean = regexp_replace(day1$body, "[0-9,\\-\\[\\]\"'`.?()’—!⌈_+^#@$%*;:/|\\<>&\n]","") %>% lower())
+day1 = selectExpr(day1, "split(clean,' ') AS words")
+day1 = select(day1, explode(day1$words))
+day1$col = trim(day1$col)
+day1 = group_by(day1, "col") %>% count()
+res_val1 = arrange(day1, desc(day1$count))%>% head(n=150)
+res_val1=res_val1[!(res_val1$col %in% stop),]
+
+
+day2= select(filter(word_res, word_res$day == 57), word_res$body)
+day2 = mutate(day2, clean = regexp_replace(day2$body, "[0-9,\\-\\[\\]\"'`.?()’—!⌈_+^#@$%*;:/|\\<>&\n]","") %>% lower())
+day2 = selectExpr(day2, "split(clean,' ') AS words")
+day2 = select(day2, explode(day2$words))
+day2$col = trim(day2$col)
+day2 = group_by(day2, "col") %>% count()
+res_val2 = arrange(day2, desc(day2$count))%>% head(n=150)
+res_val2=res_val2[!(res_val2$col %in% stop),]
+#getjson file
+
+#feb 3, feb26
+save(res_val,res_val1,res_val2, file="task3.Rdata")
+
 res = select(j, j$subreddit, j$created_utc) 
 res_t = mutate(res, created = from_unixtime(res$created_utc)) %>%
-  mutate(., month=month(.$created), wday=date_format(.$created,"E"), rounded=round(.$created_utc/3600)*3600, hour=date_format(.$created, "H")) 
+  mutate(., month=month(.$created), wday=date_format(.$created,"E"), rounded=round(.$created_utc/3600)*3600, 
+         hour=date_format(.$created, "H")) 
 res1 = group_by(res_t, res_t$month, res_t$subreddit) %>% count()
 
 res2=group_by(res_t, res_t$wday, res_t$hour)%>% count()
